@@ -1,6 +1,10 @@
-class CaixaDaLanchonete {
+class CaixaDaLanchonete{
 
-    calcularValorDaCompra(metodoDePagamento, itens) {
+    formatarValor(valor){
+        return valor.toFixed(2).replace(".", ",");
+    }
+
+    calcularValorDaCompra(formaDePagamento, itens){
         const menu = {
             cafe: 3.00,
             chantily: 1.50,
@@ -21,12 +25,12 @@ class CaixaDaLanchonete {
             }
 
             if(item === 'chantily' || item ==='queijo'){
-                const itemPrincipal = item === 'chantily' ? 'café' : 'sanduiche';
+                const itemPrincipal = item === 'chantily' ? 'cafe' : 'sanduiche';
 
                 if(!itemQuantidade[itemPrincipal]) {
                     return "Item extra não pode ser pedido sem o principal";
                 }
-            itemQuantidade[item] = (itemQuantidade[item] || 0) + parseInt(quantidade);    
+
             }
         }
 
@@ -34,7 +38,7 @@ class CaixaDaLanchonete {
             total += menu[item] * itemQuantidade[item];
         }
 
-        switch(metodoDePagamento){
+        switch(formaDePagamento){
             case 'dinheiro':
                 total *= 0.95;
                 break;
@@ -52,10 +56,11 @@ class CaixaDaLanchonete {
         }
 
         if(itens.some(itemInfo => itemInfo.endsWith(',0'))){
-            return "Quantidade inválida;"
+            return "Quantidade inválida!;"
         }
 
         return `R$ ${total.toFixed(2)}`;
+        
     }
 }
 
