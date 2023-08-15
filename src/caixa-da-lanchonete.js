@@ -10,6 +10,7 @@ class CaixaDaLanchonete {
             salgado: 7.25,
             combo1: 9.50,
             combo2: 7.50,
+        };
         let total = 0;
         let itemQuantidade = {}; 
 
@@ -30,7 +31,24 @@ class CaixaDaLanchonete {
         }
 
         for(const item in this.itemQuantidade){
-            total += menu[item] * itemQuantidade
+            total += menu[item] * itemQuantidade[item];
+        }
+
+        switch(formaDePagamento){
+            case 'dinheiro':
+                total *= 0.95;
+                break;
+            case 'credito':
+                total *= 1.03;
+                break;
+            case 'debito':
+                break;
+            default:
+                return "Forma de pagamento inválida!";
+        }
+
+        if(itens.tamanho === 0){
+            return "Não há itens no carrinho de compra!";
         }
     }
 }
