@@ -15,7 +15,7 @@ class CaixaDaLanchonete {
         let itemQuantidade = {}; 
 
         for(const itemInfo of itens){
-            cost [itemInfo, quantidade] = itemInfo.split(',');
+            const [item, quantidade] = itemInfo.split(',');
             if(!menu[item]){
                 return "Item inválido!";
             }
@@ -26,15 +26,15 @@ class CaixaDaLanchonete {
                 if(!itemQuantidade[itemPrincipal]) {
                     return "Item extra não pode ser pedido sem o principal";
                 }
-            itemQuantidade[item] = (itemQuantidades[item] || 0) + parseInt(quantidade);    
+            itemQuantidade[item] = (itemQuantidade[item] || 0) + parseInt(quantidade);    
             }
         }
 
-        for(const item in this.itemQuantidade){
+        for(const item in itemQuantidade){
             total += menu[item] * itemQuantidade[item];
         }
 
-        switch(formaDePagamento){
+        switch(metodoDePagamento){
             case 'dinheiro':
                 total *= 0.95;
                 break;
@@ -47,9 +47,15 @@ class CaixaDaLanchonete {
                 return "Forma de pagamento inválida!";
         }
 
-        if(itens.tamanho === 0){
+        if(itens.length === 0){
             return "Não há itens no carrinho de compra!";
         }
+
+        if(itens.some(itemInfo => itemInfo.endsWith(',0'))){
+            return "Quantidade inválida;"
+        }
+
+        return `R$ ${total.toFixed(2)}`;
     }
 }
 
