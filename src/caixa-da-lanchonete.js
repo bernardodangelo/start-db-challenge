@@ -31,6 +31,9 @@ class CaixaDaLanchonete{
                     return "Item extra não pode ser pedido sem o principal";
                 }
 
+                itemQuantidade[item] = (itemQuantidade[item] || 0) + parseInt(quantidade);
+            } else {
+                itemQuantidade[item] = (itemQuantidade[item] || 0) + parseInt(quantidade);
             }
         }
 
@@ -56,11 +59,11 @@ class CaixaDaLanchonete{
         }
 
         if(itens.some(itemInfo => itemInfo.endsWith(',0'))){
-            return "Quantidade inválida!;"
+            return "Quantidade inválida!";
         }
 
-        return `R$ ${total.toFixed(2)}`;
-        
+        return `R$ ${this.formatarValor(total)}`;
+
     }
 }
 
