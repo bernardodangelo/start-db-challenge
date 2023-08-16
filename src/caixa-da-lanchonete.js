@@ -1,9 +1,11 @@
 class CaixaDaLanchonete{
 
+    //padronização de quantidade de decimais e troca de ponto por vírgula utilizando tofixed
     formatarValor(valor){
         return valor.toFixed(2).replace(".", ",");
     }
 
+    //menu de itens
     calcularValorDaCompra(formaDePagamento, itens){
         const menu = {
             cafe: 3.00,
@@ -17,30 +19,33 @@ class CaixaDaLanchonete{
         };
         let total = 0;
         let itemQuantidade = {}; 
-
+        
         for(const itemInfo of itens){
+            // divide a string do iteminfo em duas partes
             const [item, quantidade] = itemInfo.split(',');
+            // verifica se o item existe
             if(!menu[item]){
                 return "Item inválido!";
             }
-
+            
             if(item === 'chantily' || item ==='queijo'){
+                // associa café com chantily e sanduiche com queijo
                 const itemPrincipal = item === 'chantily' ? 'cafe' : 'sanduiche';
 
                 if(!itemQuantidade[itemPrincipal]) {
                     return "Item extra não pode ser pedido sem o principal";
                 }
-
-                itemQuantidade[item] = (itemQuantidade[item] || 0) + parseInt(quantidade);
-            } else {
-                itemQuantidade[item] = (itemQuantidade[item] || 0) + parseInt(quantidade);
             }
+            // aumenta a quantidade do item extra
+            itemQuantidade[item] = (itemQuantidade[item] || 0) + parseInt(quantidade);
         }
 
+        // calculo do preço
         for(const item in itemQuantidade){
             total += menu[item] * itemQuantidade[item];
         }
 
+        // escolhe a forma de pagamento
         switch(formaDePagamento){
             case 'dinheiro':
                 total *= 0.95;
@@ -62,10 +67,8 @@ class CaixaDaLanchonete{
             return "Quantidade inválida!";
         }
 
+        // chama a funçao formatar valor e retorna o total já formatado
         return `R$ ${this.formatarValor(total)}`;
-
     }
 }
-
-
 export { CaixaDaLanchonete };
